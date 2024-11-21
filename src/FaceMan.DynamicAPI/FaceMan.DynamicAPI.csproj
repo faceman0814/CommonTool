@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\..\version.props" />
+  <PropertyGroup>
+	  <LangVersion>$(LangVersion)</LangVersion>
+	  <TargetFramework>$(DotNetVersion)</TargetFramework>
+	  <RootNamespace>FaceMan</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>

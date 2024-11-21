@@ -1,0 +1,12 @@
+<Project>
+
+  <PropertyGroup>
+    <DotNetVersion>net9.0</DotNetVersion>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- 项目引入模式，src:源码  nuget:包 -->
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591;1572;1570;1573;1584;1587;1658;0414;</NoWarn>
+  </PropertyGroup>
+</Project>
