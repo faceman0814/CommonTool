@@ -1,4 +1,6 @@
-﻿namespace FaceMan.DynamicWebAPI
+﻿using System;
+
+namespace FaceMan.DynamicWebAPI
 {
     /// <summary>
     /// 动态WebAPI特性

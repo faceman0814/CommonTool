@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
+
+using System.Collections.Generic;
+using System.Linq;
 namespace FaceMan.DynamicWebAPI
 {
     /// <summary>
