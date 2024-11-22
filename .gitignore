@@ -1,2 +1,4 @@
 /FaceMan.Common/.vs
 /.vs
+/src/FaceMan.DynamicAPI/obj
+/src/FaceMan.DynamicAPI/bin

@@ -5,6 +5,5 @@
     /// </summary>
     public interface IApplicationService
     {
-        TService GetService<TService>();
     }
 }

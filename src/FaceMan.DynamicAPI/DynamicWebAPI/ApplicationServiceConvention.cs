@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FaceMan.DynamicWebAPI.Config;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 
@@ -13,12 +15,12 @@ namespace FaceMan.DynamicWebAPI
     /// </summary>
     public class ApplicationServiceConvention : IApplicationModelConvention
     {
-        private IConfiguration _configuration;
-        private List<HttpMethodConfigure> httpMethods = new();
-        public ApplicationServiceConvention(IConfiguration configuration)
+        private readonly string _routePrefix;
+        private List<HttpMethodConfigure> _httpMethods = new();
+        public ApplicationServiceConvention(SwaggerConfigParam param)
         {
-            _configuration = configuration;
-            httpMethods = _configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
+            _httpMethods= param.HttpMethods;
+            _routePrefix = param.RoutePrefix;
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace FaceMan.DynamicWebAPI
             {
                 foreach (var item in action.Selectors)
                 {
-                    var routePath = string.Concat("api/", controllerName + "/", action.ActionName).Replace("//", "/");
+                    var routePath = string.Concat(_routePrefix + "/", controllerName + "/", action.ActionName).Replace("//", "/");
                     var routeModel = new AttributeRouteModel(new RouteAttribute(routePath));
                     //如果没有设置路由，则添加路由
                     if (item.AttributeRouteModel == null)
@@ -107,7 +109,7 @@ namespace FaceMan.DynamicWebAPI
                 //大写方法名
                 var methodName = action.ActionMethod.Name.ToUpper();
                 //遍历HttpMethodInfo配置，匹配方法名
-                foreach (var item in httpMethods)
+                foreach (var item in _httpMethods)
                 {
                     foreach (var method in item.MethodVal)
                     {
@@ -139,7 +141,7 @@ namespace FaceMan.DynamicWebAPI
         /// <returns></returns>
         public SelectorModel ConfigureSelectorModel(SelectorModel selectorModel, ActionModel action, string controllerName, string httpMethod)
         {
-            var routePath = string.Concat("api/", controllerName + "/", action.ActionName).Replace("//", "/");
+            var routePath = string.Concat(_routePrefix + "/", controllerName + "/", action.ActionName).Replace("//", "/");
             //给此选择器添加路由
             selectorModel.AttributeRouteModel = new AttributeRouteModel(new RouteAttribute(routePath));
             //添加HttpMethod

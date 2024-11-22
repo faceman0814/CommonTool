@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FaceMan.DynamicWebAPI.Config;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
+using System.Collections.Generic;
 
 namespace FaceMan.DynamicWebAPI
 {
@@ -14,9 +17,10 @@ namespace FaceMan.DynamicWebAPI
         /// <summary>
         /// 为IMvcBuilder添加动态WebAPI功能。
         /// </summary>
-        /// <param name="builder">IMvcBuilder实例。</param>
-        /// <returns>IMvcBuilder实例。</returns>
-        public static IMvcBuilder AddDynamicWebApi(this IMvcBuilder builder, IConfiguration configuration)
+        /// <param name="builder"></param>
+        /// <param name="param" cref="SwaggerConfigParam"></param>
+        /// <returns></returns>
+        public static IMvcBuilder AddDynamicWebApi(this IMvcBuilder builder, SwaggerConfigParam param)
         {
             if (builder == null)
             {
@@ -32,18 +36,19 @@ namespace FaceMan.DynamicWebAPI
             // 配置MvcOptions，添加自定义的应用程序模型约定
             builder.Services.Configure<MvcOptions>(options =>
             {
-                options.Conventions.Add(new ApplicationServiceConvention(configuration));
+                options.Conventions.Add(new ApplicationServiceConvention(param));
             });
 
             return builder;
         }
 
         /// <summary>
-        /// 为IMvcCoreBuilder添加动态WebAPI功能。
+        /// 为IMvcCoreBuilder添加动态WebAPI功能
         /// </summary>
-        /// <param name="builder">IMvcCoreBuilder实例。</param>
-        /// <returns>IMvcCoreBuilder实例。</returns>
-        public static IMvcCoreBuilder AddDynamicWebApi(this IMvcCoreBuilder builder, IConfiguration configuration)
+        /// <param name="builder"></param>
+        /// <param name="param" cref="SwaggerConfigParam"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static IMvcCoreBuilder AddDynamicWebApi(this IMvcCoreBuilder builder, SwaggerConfigParam param)
         {
             if (builder == null)
             {
@@ -59,7 +64,7 @@ namespace FaceMan.DynamicWebAPI
             // 配置MvcOptions，添加自定义的应用程序模型约定
             builder.Services.Configure<MvcOptions>(options =>
             {
-                options.Conventions.Add(new ApplicationServiceConvention(configuration));
+                options.Conventions.Add(new ApplicationServiceConvention(param));
             });
 
             return builder;
