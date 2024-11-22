@@ -92,7 +92,7 @@ namespace FaceMan.DynamicWebAPI
                     {
                         selector.AttributeRouteModel = routeModel;
                     }
-                  
+                    selector.ActionConstraints.Clear();
                     string methodName = httpAttributes.GetType().Name;
                     if (_httpMethodConstraints.TryGetValue(methodName, out var methods))
                     {
