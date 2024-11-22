@@ -1,13 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.OpenApi.Models;
+﻿using Swashbuckle.AspNetCore.SwaggerUI;
 
-using Swashbuckle.AspNetCore.SwaggerUI;
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FaceMan.DynamicWebAPI.Config
 {
@@ -81,7 +74,14 @@ namespace FaceMan.DynamicWebAPI.Config
         /// 设置默认模型展开深度。默认值为3，可以设置成-1以完全展开所有模型。
         /// </summary>
         public int DefaultModelExpandDepth { get; set; } = 3;
+        /// <summary>
+        /// 配置Endpoint路径
+        /// </summary>
         public string SwaggerEndpoint { get; set; } = "/swagger/v1/swagger.json";
+        /// <summary>
+        /// 时间格式化响应,默认值: yyyy-MM-dd HH:mm:ss
+        /// </summary>
+        public string DatetimeFormat { get; set; } = "yyyy-MM-dd HH:mm:ss";
 
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FaceMan.DynamicAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0829a4b4790b0e6b587bab9f8f8d2857fde9a20b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+793e0edcb503bda679a4add9aed466e3d58fdc88")]
 [assembly: System.Reflection.AssemblyProductAttribute("FaceMan.DynamicAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FaceMan.DynamicAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

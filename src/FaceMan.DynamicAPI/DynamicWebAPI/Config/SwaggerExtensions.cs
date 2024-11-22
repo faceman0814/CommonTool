@@ -36,10 +36,12 @@ namespace FaceMan.DynamicWebAPI.Config
                 options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
                 //加安全需求信息。它会根据 API 的安全配置（如 OAuth2、JWT 等）自动生成相应的安全需求描述，帮助开发者了解哪些操作需要特定的安全配置。
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
-                options.DocumentFilter<RemoveAppFilter>();
+                //去掉控制器中的API后缀
+                options.DocumentFilter<RemoveSuffixFilter>();
                 //使Post请求的Body参数在Swagger UI中以Json格式显示。
                 options.OperationFilter<JsonBodyOperationFilter>();
-                options.OperationFilter<WrapResponseOperationFilter>(); // 添加自定义Swagger操作过滤器
+                // 添加自定义Swagger操作过滤器
+                options.OperationFilter<WrapResponseOperationFilter>();
                 //添加自定义文档信息
                 options.SwaggerDoc(param.Version, new OpenApiInfo
                 {
@@ -54,6 +56,7 @@ namespace FaceMan.DynamicWebAPI.Config
                     }
                 });
 
+                //启用Swagger文档的XML注释
                 if (param.EnableXmlComments)
                 {
                     //遍历所有xml并加载
@@ -79,7 +82,6 @@ namespace FaceMan.DynamicWebAPI.Config
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    //配置Endpoint路径和文档标题
                     options.SwaggerEndpoint(param.SwaggerEndpoint, param.Version);
                     options.DefaultModelExpandDepth(param.DefaultModelExpandDepth);
                     if (param.EnableDeepLinking)
@@ -105,7 +107,7 @@ namespace FaceMan.DynamicWebAPI.Config
             services.AddControllers().AddJsonOptions(options =>
             {
                 //时间格式化响应
-                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate("yyyy-MM-dd HH:mm:ss"));
+                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(configParam.DatetimeFormat));
                 // 使用PascalCase属性名,动态API才能拿到值。
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 //禁止字符串被转义成Unicode

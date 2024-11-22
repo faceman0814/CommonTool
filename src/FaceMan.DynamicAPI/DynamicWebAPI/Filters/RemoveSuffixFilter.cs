@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace FaceMan.DynamicWebAPI.Filters
 {
-    public class RemoveAppFilter : IDocumentFilter
+    public class RemoveSuffixFilter : IDocumentFilter
     {
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
             var newTags = new List<OpenApiTag>();
-            // 去掉控制器分类中的 "App" 后缀
+            // 去掉控制器分类中的API通用后缀
             foreach (var path in swaggerDoc.Paths.Values)
             {
                 foreach (var operation in path.Operations.Values)
