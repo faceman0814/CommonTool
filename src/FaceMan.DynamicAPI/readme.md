@@ -50,6 +50,78 @@ app.UseSwagger(conifg);
 
 ```
 
+## 业务类
+```
+ /// <summary>
+    /// 继承IApplicationService实现的动态API服务
+    /// </summary>
+    public class TestAppService : IApplicationService
+    {
+        /// <summary>
+        /// 实现GetDataAPI接口
+        /// </summary>
+        /// <param name="inputParam"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public string GetData(InputParam inputParam)
+        {
+            return "Hello World!";
+        }
+
+        /// <summary>
+        /// 实现CreateDataAPI接口
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string CreateData(InputParam input)
+        {
+            return "Data created with input: " + input.Input;
+        }
+
+        public string UPDATEData(InputParam input)
+        {
+            return "Data UPDATE with input: " + input.Input;
+        }
+        public string DeleteData(InputParam input)
+        {
+            return "Data Delete with input: " + input.Input;
+        }
+    }
+
+    public class InputParam
+    {
+        public string Input { get; set; }
+        public string Input1 { get; set; }
+
+    }
+
+     /// <summary>
+    /// 用DynamicWebApi特性实现的动态API服务
+    /// </summary>
+    [DynamicWebApi]
+    public class AttributeService
+    {
+        public string GetData(InputParam inputParam)
+        {
+            return "Hello World!";
+        }
+
+        public string CreateData(InputParam input)
+        {
+            return "Data created with input: " + input.Input;
+        }
+
+        public string UPDATEData(InputParam input)
+        {
+            return "Data UPDATE with input: " + input.Input;
+        }
+        public string DeleteData(InputParam input)
+        {
+            return "Data Delete with input: " + input.Input;
+        }
+    }
+```
+
 ## 其他配置项
 ### 文档注释
 1、要开启文档注释，首先需要在类库属性中设置XML文件路径
