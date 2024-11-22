@@ -28,6 +28,7 @@
     }
   ]
 ```
+也自定义http特性，跟Controller一样加[HttpPost]就可以了
 
 在Program设置Swagger配置项
 ```csharp
