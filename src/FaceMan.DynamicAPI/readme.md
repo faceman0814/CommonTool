@@ -1,5 +1,5 @@
 # 功能
-动态扫描继承了IApplicationService的类，生成Swagger API接口。
+动态扫描生成Swagger API接口。
 支持三种方式：
 - 继承IApplicationService接口
 - 标记DynamicWebApi特性
