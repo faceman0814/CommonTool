@@ -1,4 +1,13 @@
-/FaceMan.Common/.vs
-/.vs
+# 忽略编译生成的文件夹
+**/bin/
+**/obj/
+# 忽略Visual Studio临时文件和设置
+/.vs/
+
+# 忽略Windows和MacOS系统生成的特定文件
+Thumbs.db
+.DS_Store
+
+# 忽略Node.js模块文件夹（如果使用）
+# node_modules/
 /src/FaceMan.DynamicAPI/obj
-/src/FaceMan.DynamicAPI/bin
