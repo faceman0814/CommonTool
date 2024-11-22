@@ -11,3 +11,4 @@ Thumbs.db
 # 忽略Node.js模块文件夹（如果使用）
 # node_modules/
 /src/FaceMan.DynamicAPI/obj
+/.vs
