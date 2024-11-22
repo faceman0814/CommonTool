@@ -4,6 +4,12 @@
 	  <LangVersion>$(LangVersion)</LangVersion>
 	  <TargetFramework>$(DotNetVersion)</TargetFramework>
 	  <RootNamespace>FaceMan</RootNamespace>
+	  <Title>动态API</Title>
+	  <Authors>FaceMan</Authors>
+	  <PackageProjectUrl>https://github.com/faceman0814/FaceMan.Common/tree/main/src/FaceMan.DynamicAPI</PackageProjectUrl>
+	  <RepositoryUrl>https://github.com/faceman0814/FaceMan.Common</RepositoryUrl>
+	  <Description>Swagger自动扫描Service类生成API文档</Description>
+	  <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +21,13 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

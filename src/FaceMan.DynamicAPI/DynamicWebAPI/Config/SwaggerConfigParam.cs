@@ -18,12 +18,9 @@ namespace FaceMan.DynamicWebAPI.Config
         /// 描述
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
-        /// 文档路径
-        /// </summary>
-        public string ApiDocsPath { get; set; }
-        /// <summary>
-        /// 文档存储路径
+        /// 应用静态文件路径，例如：wwwroot
         /// </summary>
         public string WebRootPath { get; set; }
         /// <summary>
@@ -43,13 +40,17 @@ namespace FaceMan.DynamicWebAPI.Config
         /// </summary>
         public List<HttpMethodConfigure> HttpMethods { get; set; }
         /// <summary>
-        /// 是否开启JWT验证
-        /// </summary>
-        public bool EnableJwtAuth { get; set; }
-        /// <summary>
         /// 是否开启文档注释
         /// </summary>
         public bool EnableXmlComments { get; set; }
+        /// <summary>
+        /// 注释文档路径，生成注释文档时，将XML文件放在该路径下。
+        /// </summary>
+        public string ApiDocsPath { get; set; }
+        /// <summary>
+        /// 是否开启API结果过滤器,默认开启
+        /// </summary>
+        public bool EnableApiResultFilter { get; set; } = true;
         /// <summary>
         /// 是否开启登录页
         /// </summary>
@@ -82,6 +83,9 @@ namespace FaceMan.DynamicWebAPI.Config
         /// 时间格式化响应,默认值: yyyy-MM-dd HH:mm:ss
         /// </summary>
         public string DatetimeFormat { get; set; } = "yyyy-MM-dd HH:mm:ss";
-
+        /// <summary>
+        /// 公共后缀，用于生成API时会删除。
+        /// </summary>
+        public string[] CommonPostfixes { get; set; } 
     }
 }

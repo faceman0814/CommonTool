@@ -1,4 +1,6 @@
-﻿using FaceMan.DynamicWebAPI.Extensions;
+﻿using FaceMan.DynamicWebAPI.Attributes;
+using FaceMan.DynamicWebAPI.Config;
+using FaceMan.DynamicWebAPI.Extensions;
 using FaceMan.DynamicWebAPI.Filters;
 
 using Microsoft.AspNetCore.Builder;
@@ -18,7 +20,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
-namespace FaceMan.DynamicWebAPI.Config
+namespace FaceMan.DynamicWebAPI.Extensions
 {
     public static class SwaggerExtensions
     {
@@ -37,7 +39,7 @@ namespace FaceMan.DynamicWebAPI.Config
                 //加安全需求信息。它会根据 API 的安全配置（如 OAuth2、JWT 等）自动生成相应的安全需求描述，帮助开发者了解哪些操作需要特定的安全配置。
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
                 //去掉控制器中的API后缀
-                options.DocumentFilter<RemoveSuffixFilter>();
+                //options.DocumentFilter<RemoveSuffixFilter>();
                 //使Post请求的Body参数在Swagger UI中以Json格式显示。
                 options.OperationFilter<JsonBodyOperationFilter>();
                 // 添加自定义Swagger操作过滤器
@@ -104,6 +106,17 @@ namespace FaceMan.DynamicWebAPI.Config
 
         public static void AddDynamicApi(this IServiceCollection services, SwaggerConfigParam configParam)
         {
+            services.AddControllersWithViews(x =>
+            {
+                if (configParam.EnableApiResultFilter)
+                {
+                    //全局返回，异常处理，统一返回格式。
+                    x.Filters.Add<ApiResultFilterAttribute>();
+                }
+                //解析Post请求参数，将json反序列化赋值参数
+                x.Filters.Add(new AutoFromBodyActionFilter());
+            });
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 //时间格式化响应
