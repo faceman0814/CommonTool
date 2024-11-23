@@ -142,7 +142,11 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 x.Filters.Add(new AutoFromBodyActionFilter());
             });
 
-            services.AddControllers().AddJsonOptions(options =>
+            services.AddControllers(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
+            })
+            .AddJsonOptions(options =>
             {
                 //时间格式化响应
                 options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(configParam.DatetimeFormat));
