@@ -1,17 +1,14 @@
 ﻿using FaceMan.DynamicWebAPI.Attributes;
 using FaceMan.DynamicWebAPI.Config;
-using FaceMan.DynamicWebAPI.Extensions;
 using FaceMan.DynamicWebAPI.Filters;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.Filters;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 using System;
 using System.Collections.Generic;
@@ -19,11 +16,23 @@ using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-
 namespace FaceMan.DynamicWebAPI.Extensions
 {
     public static class SwaggerExtensions
     {
+        private static SwaggerConfigParam _configParam = new SwaggerConfigParam()
+        {
+            Title = "FaceMan API",
+            Version = "v1",
+            Description = "FaceMan API",
+            ContactName = "FaceMan",
+            ContactEmail = "face<EMAIL>",
+            ContactUrl = "https://www.face-man.com",
+            EnableXmlComments = true,
+            ApiDocsPath = "ApiDocs",
+            EnableLoginPage = true,
+            LoginPagePath = "pages/swagger.html"
+        };
         /// <summary>
         /// 配置Swagger
         /// </summary>
@@ -76,8 +85,12 @@ namespace FaceMan.DynamicWebAPI.Extensions
         /// <summary>
         /// 启用Swagger
         /// </summary>
-        public static void UseSwagger(this WebApplication app, SwaggerConfigParam param)
+        public static void UseDynamicSwagger(this WebApplication app, SwaggerConfigParam param = null)
         {
+            if (param == null)
+            {
+                param = _configParam;
+            }
             //开发环境或测试环境才开启文档。
             if (app.Environment.IsDevelopment())
             {
@@ -104,9 +117,21 @@ namespace FaceMan.DynamicWebAPI.Extensions
             }
         }
 
-        public static void AddDynamicApi(this IServiceCollection services, SwaggerConfigParam configParam)
+        public static void AddDynamicApi(this IServiceCollection services, string webRootPath, SwaggerConfigParam configParam = null)
         {
-            services.AddControllersWithViews(x =>
+            var basePath = AppContext.BaseDirectory;
+            var configuration = new ConfigurationBuilder()
+                           .SetBasePath(basePath)
+                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                           .Build();
+            //获取wwwroot路径
+            if (configParam == null)
+            {
+                configParam = _configParam;
+                configParam.WebRootPath = webRootPath;
+                configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
+            }
+            services.AddMvcCore(x =>
             {
                 if (configParam.EnableApiResultFilter)
                 {

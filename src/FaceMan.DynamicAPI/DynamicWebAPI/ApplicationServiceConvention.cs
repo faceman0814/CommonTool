@@ -22,16 +22,7 @@ namespace FaceMan.DynamicWebAPI
         private readonly string _routePrefix;
         private readonly List<HttpMethodConfigure> _httpMethods;
         private readonly string[] _commonPostfixes;
-        private Dictionary<string, string[]> _httpMethodConstraints = new Dictionary<string, string[]>
-        {
-            {"HttpGetAttribute", new[] {"GET"}},
-            {"HttpPostAttribute", new[] {"POST"}},
-            {"HttpPutAttribute", new[] {"PUT"}},
-            {"HttpDeleteAttribute", new[] {"DELETE"}},
-            {"HttpPatchAttribute", new[] {"PATCH"}},
-            {"HttpOptionsAttribute", new[] {"OPTIONS"}},
-            {"HttpHeadAttribute", new[] {"HEAD"}}
-        };
+
         public ApplicationServiceConvention(SwaggerConfigParam param)
         {
             _routePrefix = param.RoutePrefix ?? throw new ArgumentNullException(nameof(param.RoutePrefix));
@@ -82,8 +73,9 @@ namespace FaceMan.DynamicWebAPI
 
             foreach (var selector in action.Selectors)
             {
-                var httpAttributes = selector.EndpointMetadata.FirstOrDefault();
-                if (httpAttributes!=null)
+                //判断是否有HttpMethodAttribute
+                var httpAttributes = selector.ActionConstraints.Any();
+                if (httpAttributes)
                 {
                     string routePath = string.Concat(_routePrefix + "/", controllerName + "/", action.ActionName).Replace("//", "/");
                     var routeModel = new AttributeRouteModel(new RouteAttribute(routePath));
@@ -91,12 +83,6 @@ namespace FaceMan.DynamicWebAPI
                     if (selector.AttributeRouteModel == null)
                     {
                         selector.AttributeRouteModel = routeModel;
-                    }
-                  
-                    string methodName = httpAttributes.GetType().Name;
-                    if (_httpMethodConstraints.TryGetValue(methodName, out var methods))
-                    {
-                        selector.ActionConstraints.Add(new HttpMethodActionConstraint(methods));
                     }
                 }
                 else if (selector.AttributeRouteModel == null)
@@ -136,10 +122,10 @@ namespace FaceMan.DynamicWebAPI
             {
                 foreach (var method in item.MethodVal)
                 {
-                    if (methodName.StartsWith(method))
+                    if (methodName.StartsWith(method.ToUpper()))
                     {
                         httpMethod = item.MethodKey;
-                        break;
+                        goto end;
                     }
 
                 }
@@ -149,7 +135,7 @@ namespace FaceMan.DynamicWebAPI
             {
                 httpMethod = "POST";
             }
-
+        end:
 
             return ConfigureSelectorModel(selectorModel, action, controllerName, httpMethod);
         }
