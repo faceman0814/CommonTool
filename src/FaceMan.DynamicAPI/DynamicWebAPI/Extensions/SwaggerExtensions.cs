@@ -136,8 +136,8 @@ namespace FaceMan.DynamicWebAPI.Extensions
                     }
                     // 文档展开方式
                     options.DocExpansion(param.DocExpansion);
-                    // 开启登录页,如果开启EnableSimpleToken则不显示登录页
-                    if (param.EnableLoginPage && !param.EnableSimpleToken)
+                    // 开启登录页
+                    if (param.EnableLoginPage )
                     {
                         options.IndexStream = () =>
                         {

@@ -51,77 +51,8 @@ app.UseSwagger(conifg);
 
 ```
 
-## 业务类
-```
- /// <summary>
-    /// 继承IApplicationService实现的动态API服务
-    /// </summary>
-    public class TestAppService : IApplicationService
-    {
-        /// <summary>
-        /// 实现GetDataAPI接口
-        /// </summary>
-        /// <param name="inputParam"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public string GetData(InputParam inputParam)
-        {
-            return "Hello World!";
-        }
-
-        /// <summary>
-        /// 实现CreateDataAPI接口
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public string CreateData(InputParam input)
-        {
-            return "Data created with input: " + input.Input;
-        }
-
-        public string UPDATEData(InputParam input)
-        {
-            return "Data UPDATE with input: " + input.Input;
-        }
-        public string DeleteData(InputParam input)
-        {
-            return "Data Delete with input: " + input.Input;
-        }
-    }
-
-    public class InputParam
-    {
-        public string Input { get; set; }
-        public string Input1 { get; set; }
-
-    }
-
-     /// <summary>
-    /// 用DynamicWebApi特性实现的动态API服务
-    /// </summary>
-    [DynamicWebApi]
-    public class AttributeService
-    {
-        public string GetData(InputParam inputParam)
-        {
-            return "Hello World!";
-        }
-
-        public string CreateData(InputParam input)
-        {
-            return "Data created with input: " + input.Input;
-        }
-
-        public string UPDATEData(InputParam input)
-        {
-            return "Data UPDATE with input: " + input.Input;
-        }
-        public string DeleteData(InputParam input)
-        {
-            return "Data Delete with input: " + input.Input;
-        }
-    }
-```
+## 用法
+参考Example
 
 ## 其他配置项
 ### 文档注释
@@ -463,7 +394,14 @@ var conifg = new SwaggerConfigParam()
     });
 
 </script>
-
 ```
 请求登录接口成功之后就会自动跳转Swagger，在调用接口时会自动加到请求头，token过期后会跳回登录页面。
 ![image](https://github.com/faceman0814/picx-images-hosting/raw/master/20241121/image.99tdtuk3sy.webp)
+
+### 不开登录页，但需要权限校验
+var conifg = new SwaggerConfigParam()
+{
+    //其他配置
+    EnableSimpleToken=true
+    EnableLoginPage=false
+};
