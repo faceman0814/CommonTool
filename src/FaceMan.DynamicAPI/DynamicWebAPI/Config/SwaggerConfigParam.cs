@@ -87,5 +87,13 @@ namespace FaceMan.DynamicWebAPI.Config
         /// 公共后缀，用于生成API时会删除。
         /// </summary>
         public string[] CommonPostfixes { get; set; } 
+        /// <summary>
+        /// 开启后每个请求都需要携带Token认证，默认关闭
+        /// </summary>
+        public bool EnableSimpleToken { get; set; } = false;
+        /// <summary>
+        /// 配置API路由前缀，ApiRoutePrefix是Swagger生成的API的根路径,默认值: api。
+        /// </summary>
+        public string ApiRoutePrefix { get; set; } = "api";
     }
 }

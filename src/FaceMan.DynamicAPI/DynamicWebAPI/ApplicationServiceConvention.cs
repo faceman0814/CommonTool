@@ -25,7 +25,7 @@ namespace FaceMan.DynamicWebAPI
 
         public ApplicationServiceConvention(SwaggerConfigParam param)
         {
-            _routePrefix = param.RoutePrefix ?? throw new ArgumentNullException(nameof(param.RoutePrefix));
+            _routePrefix = param.ApiRoutePrefix ?? throw new ArgumentNullException(nameof(param.ApiRoutePrefix));
             _httpMethods = param.HttpMethods ?? throw new ArgumentNullException(nameof(param.HttpMethods));
             _commonPostfixes = param.CommonPostfixes ?? new[] { "AppService", "ApplicationService", "Service" };
         }

@@ -1,5 +1,4 @@
-﻿using FaceMan.DynamicWebAPI.Attributes;
-using FaceMan.DynamicWebAPI.Config;
+﻿using FaceMan.DynamicWebAPI.Config;
 using FaceMan.DynamicWebAPI.Filters;
 
 using Microsoft.AspNetCore.Builder;
@@ -31,13 +30,16 @@ namespace FaceMan.DynamicWebAPI.Extensions
             EnableXmlComments = true,
             ApiDocsPath = "ApiDocs",
             EnableLoginPage = true,
-            LoginPagePath = "pages/swagger.html"
+            LoginPagePath = "pages/swagger.html",
+            EnableApiResultFilter = true,
+            EnableSimpleToken = true
         };
         /// <summary>
         /// 配置Swagger
         /// </summary>
         public static void AddSwagger(this IServiceCollection services, SwaggerConfigParam param)
         {
+            // 启用 API 端点探索的功能
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
             {
@@ -47,12 +49,19 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
                 //加安全需求信息。它会根据 API 的安全配置（如 OAuth2、JWT 等）自动生成相应的安全需求描述，帮助开发者了解哪些操作需要特定的安全配置。
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
-                //去掉控制器中的API后缀
-                //options.DocumentFilter<RemoveSuffixFilter>();
                 //使Post请求的Body参数在Swagger UI中以Json格式显示。
                 options.OperationFilter<JsonBodyOperationFilter>();
-                // 添加自定义Swagger操作过滤器
-                options.OperationFilter<WrapResponseOperationFilter>();
+
+                if (param.EnableSimpleToken)
+                {
+                    //添加自定义请求头
+                    options.OperationFilter<SwaggerHttpHeaderFilter>();
+                }
+
+                //自定义SchemaId，避免冲突
+                options.CustomSchemaIds(CustomSchemaIdSelector);
+                ////显示枚举值
+                options.DescribeAllEnumsAsStrings();
                 //添加自定义文档信息
                 options.SwaggerDoc(param.Version, new OpenApiInfo
                 {
@@ -81,7 +90,21 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 }
             });
         }
+        /// <summary>
+        ///  自定义SchemaId
+        /// </summary>
+        /// <param name="modelType"></param>
+        /// <returns></returns>
+        static string CustomSchemaIdSelector(Type modelType)
+        {
+            if (!modelType.IsConstructedGenericType) return modelType.FullName.Replace("[]", "Array");
 
+            var prefix = modelType.GetGenericArguments()
+                .Select(genericArg => CustomSchemaIdSelector(genericArg))
+                .Aggregate((previous, current) => previous + current);
+
+            return prefix + modelType.FullName.Split('`').First();
+        }
         /// <summary>
         /// 启用Swagger
         /// </summary>
@@ -94,17 +117,27 @@ namespace FaceMan.DynamicWebAPI.Extensions
             //开发环境或测试环境才开启文档。
             if (app.Environment.IsDevelopment())
             {
+                // 启用异常页面
+                app.UseDeveloperExceptionPage();
+                // 启用Swagger
                 app.UseSwagger();
+                // 启用SwaggerUI
                 app.UseSwaggerUI(options =>
                 {
+                    options.RoutePrefix = _configParam.RoutePrefix;
+                    // Swagger文档的URL地址
                     options.SwaggerEndpoint(param.SwaggerEndpoint, param.Version);
+                    // 展开深度
                     options.DefaultModelExpandDepth(param.DefaultModelExpandDepth);
+                    //开启深层链接
                     if (param.EnableDeepLinking)
                     {
                         options.EnableDeepLinking();
                     }
+                    // 文档展开方式
                     options.DocExpansion(param.DocExpansion);
-                    if (param.EnableLoginPage)
+                    // 开启登录页,如果开启EnableSimpleToken则不显示登录页
+                    if (param.EnableLoginPage && !param.EnableSimpleToken)
                     {
                         options.IndexStream = () =>
                         {
@@ -136,7 +169,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 if (configParam.EnableApiResultFilter)
                 {
                     //全局返回，异常处理，统一返回格式。
-                    x.Filters.Add<ApiResultFilterAttribute>();
+                    x.Filters.Add<GlobalActionFilterAttribute>();
                 }
                 //解析Post请求参数，将json反序列化赋值参数
                 x.Filters.Add(new AutoFromBodyActionFilter());
