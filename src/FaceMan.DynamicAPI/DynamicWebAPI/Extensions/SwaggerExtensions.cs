@@ -131,7 +131,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 configParam.WebRootPath = webRootPath;
                 configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
             }
-            services.AddControllersWithViews(x =>
+            services.AddMvcCore(x =>
             {
                 if (configParam.EnableApiResultFilter)
                 {
