@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceMan.DynamicAPI", "src\FaceMan.DynamicAPI\FaceMan.DynamicAPI.csproj", "{9480DC2A-4343-4C5E-8A9F-1AA435D2C5C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceMan.EntityFrameworkCore", "src\FaceMan.EntityFrameworkCore\FaceMan.EntityFrameworkCore.csproj", "{444B2C48-265B-4FEB-BB24-7F960536FE77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9480DC2A-4343-4C5E-8A9F-1AA435D2C5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9480DC2A-4343-4C5E-8A9F-1AA435D2C5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9480DC2A-4343-4C5E-8A9F-1AA435D2C5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{444B2C48-265B-4FEB-BB24-7F960536FE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{444B2C48-265B-4FEB-BB24-7F960536FE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{444B2C48-265B-4FEB-BB24-7F960536FE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{444B2C48-265B-4FEB-BB24-7F960536FE77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
