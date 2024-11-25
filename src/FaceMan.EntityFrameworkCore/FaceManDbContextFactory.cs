@@ -12,6 +12,30 @@ namespace FaceMan.EntityFrameworkCore
 {
     public class FaceManDbContextFactory<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
+
+
+        public void ConfigureDatabase<T>(T options, DatabaseType databaseType, string connectionString)
+    where T : DbContextOptionsBuilder
+        {
+            switch (databaseType)
+            {
+                case DatabaseType.SqlServer:
+                    options.UseSqlServer(connectionString);
+                    break;
+
+                case DatabaseType.Sqlite:
+                    options.UseSqlite(connectionString);
+                    break;
+
+                case DatabaseType.Postgre:
+                    options.UseNpgsql(connectionString);
+                    break;
+
+                default:
+                    throw new Exception("不支持的数据库类型");
+            }
+        }
+
         public virtual TContext CreateDbContext(string[] args)
         {
             var hostName = args[0];
@@ -29,23 +53,8 @@ namespace FaceMan.EntityFrameworkCore
             Console.WriteLine("迁移使用数据库连接字符串：{0}", connectionString);
             Console.WriteLine("迁移使用数据库类型：{0}", databaseType);
 
-
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
-            switch (databaseType)
-            {
-                case DatabaseType.SqlServer:
-                    optionsBuilder.UseSqlServer(connectionString);
-                    break;
-                case DatabaseType.Sqlite:
-                    optionsBuilder.UseSqlite(connectionString);
-                    break;
-                case DatabaseType.Postgre:
-                    optionsBuilder.UseNpgsql(connectionString);
-                    break;
-                default:
-                    throw new Exception("不支持的数据库类型");
-            }
-
+            ConfigureDatabase(optionsBuilder, databaseType, connectionString);
             return (TContext)Activator.CreateInstance(typeof(TContext), optionsBuilder.Options);
         }
     }

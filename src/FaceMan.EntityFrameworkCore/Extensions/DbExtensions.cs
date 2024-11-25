@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
@@ -21,7 +22,9 @@ namespace FaceMan.EntityFrameworkCore.Extensions
         {
             if (context == null && context.Services is null) throw new ArgumentException("ServiceConfigerContext is null");
             return context.Provider.GetRequiredService<IConfiguration>();
-        }
+        } 
+        
+     
     }
 
 }
