@@ -108,12 +108,8 @@ namespace FaceMan.DynamicWebAPI.Extensions
         /// <summary>
         /// 启用Swagger
         /// </summary>
-        public static void UseDynamicSwagger(this WebApplication app, SwaggerConfigParam param = null)
+        public static void UseDynamicSwagger(this WebApplication app)
         {
-            if (param == null)
-            {
-                param = _configParam;
-            }
             //开发环境或测试环境才开启文档。
             if (app.Environment.IsDevelopment())
             {
@@ -126,22 +122,22 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 {
                     options.RoutePrefix = _configParam.RoutePrefix;
                     // Swagger文档的URL地址
-                    options.SwaggerEndpoint(param.SwaggerEndpoint, param.Version);
+                    options.SwaggerEndpoint(_configParam.SwaggerEndpoint, _configParam.Version);
                     // 展开深度
-                    options.DefaultModelExpandDepth(param.DefaultModelExpandDepth);
+                    options.DefaultModelExpandDepth(_configParam.DefaultModelExpandDepth);
                     //开启深层链接
-                    if (param.EnableDeepLinking)
+                    if (_configParam.EnableDeepLinking)
                     {
                         options.EnableDeepLinking();
                     }
                     // 文档展开方式
-                    options.DocExpansion(param.DocExpansion);
+                    options.DocExpansion(_configParam.DocExpansion);
                     // 开启登录页
                     if (param.EnableLoginPage)
                     {
                         options.IndexStream = () =>
                         {
-                            var path = Path.Join(param.WebRootPath, param.LoginPagePath);
+                            var path = Path.Join(_configParam.WebRootPath, _configParam.LoginPagePath);
                             return new FileInfo(path).OpenRead();
                         };
                     }
