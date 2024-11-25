@@ -7,9 +7,9 @@ namespace FaceMan.Example
     /// <summary>
     /// 控制器生成的API接口，不影响原有功能
     /// </summary>
-    [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class ApiController : Controller
+    //[ApiController]
+    //[Route("api/[controller]/[action]")]
+    public class ApiController 
     {
         [HttpGet]
         public string GetData(string inputParam, string sss)

@@ -9,7 +9,8 @@ namespace FaceMan.Example
     /// <summary>
     /// 继承IApplicationService实现的动态API服务
     /// </summary>
-    public class TestAppService : IApplicationService
+    public class TestAppService 
+        //: IApplicationService
     {
         /// <summary>
         /// 实现GetDataAPI接口
