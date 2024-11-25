@@ -158,15 +158,16 @@ namespace FaceMan.DynamicWebAPI.Extensions
                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                            .Build();
             //获取wwwroot路径
-            if (configParam == null)
+            if (configParam != null)
             {
-                configParam = _configParam;
+                _configParam = configParam;
             }
-            configParam.WebRootPath = webRootPath;
-            configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
+
+            _configParam.WebRootPath = webRootPath;
+            _configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
             services.AddMvcCore(x =>
             {
-                if (configParam.EnableApiResultFilter)
+                if (_configParam.EnableApiResultFilter)
                 {
                     //全局返回，异常处理，统一返回格式。
                     x.Filters.Add<GlobalActionFilterAttribute>();
@@ -182,7 +183,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
             .AddJsonOptions(options =>
             {
                 //时间格式化响应
-                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(configParam.DatetimeFormat));
+                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(_configParam.DatetimeFormat));
                 // 使用PascalCase属性名,动态API才能拿到值。
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 //禁止字符串被转义成Unicode
@@ -193,9 +194,9 @@ namespace FaceMan.DynamicWebAPI.Extensions
             services.AddMvc(options => { })
                     .AddRazorPagesOptions((options) => { })
                     .AddRazorRuntimeCompilation()
-                    .AddDynamicWebApi(configParam);
+                    .AddDynamicWebApi(_configParam);
 
-            services.AddSwagger(configParam);
+            services.AddSwagger(_configParam);
         }
     }
 }
