@@ -5,7 +5,7 @@ namespace FaceMan.Example
     /// <summary>
     /// 用DynamicWebApi特性实现的动态API服务
     /// </summary>
-    [DynamicWebApi]
+    //[DynamicWebApi]
     public class AttributeService
     {
         public string GetData(InputParam inputParam)

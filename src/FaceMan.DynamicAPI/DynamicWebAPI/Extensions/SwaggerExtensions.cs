@@ -108,12 +108,8 @@ namespace FaceMan.DynamicWebAPI.Extensions
         /// <summary>
         /// 启用Swagger
         /// </summary>
-        public static void UseDynamicSwagger(this WebApplication app, SwaggerConfigParam param = null)
+        public static void UseDynamicSwagger(this WebApplication app)
         {
-            if (param == null)
-            {
-                param = _configParam;
-            }
             //开发环境或测试环境才开启文档。
             if (app.Environment.IsDevelopment())
             {
@@ -126,22 +122,22 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 {
                     options.RoutePrefix = _configParam.RoutePrefix;
                     // Swagger文档的URL地址
-                    options.SwaggerEndpoint(param.SwaggerEndpoint, param.Version);
+                    options.SwaggerEndpoint(_configParam.SwaggerEndpoint, _configParam.Version);
                     // 展开深度
-                    options.DefaultModelExpandDepth(param.DefaultModelExpandDepth);
+                    options.DefaultModelExpandDepth(_configParam.DefaultModelExpandDepth);
                     //开启深层链接
-                    if (param.EnableDeepLinking)
+                    if (_configParam.EnableDeepLinking)
                     {
                         options.EnableDeepLinking();
                     }
                     // 文档展开方式
-                    options.DocExpansion(param.DocExpansion);
+                    options.DocExpansion(_configParam.DocExpansion);
                     // 开启登录页
-                    if (param.EnableLoginPage)
+                    if (_configParam.EnableLoginPage)
                     {
                         options.IndexStream = () =>
                         {
-                            var path = Path.Join(param.WebRootPath, param.LoginPagePath);
+                            var path = Path.Join(_configParam.WebRootPath, _configParam.LoginPagePath);
                             return new FileInfo(path).OpenRead();
                         };
                     }
@@ -158,15 +154,16 @@ namespace FaceMan.DynamicWebAPI.Extensions
                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                            .Build();
             //获取wwwroot路径
-            if (configParam == null)
+            if (configParam != null)
             {
-                configParam = _configParam;
-                configParam.WebRootPath = webRootPath;
-                configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
+                _configParam = configParam;
             }
+
+            _configParam.WebRootPath = webRootPath;
+            _configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
             services.AddMvcCore(x =>
             {
-                if (configParam.EnableApiResultFilter)
+                if (_configParam.EnableApiResultFilter)
                 {
                     //全局返回，异常处理，统一返回格式。
                     x.Filters.Add<GlobalActionFilterAttribute>();
@@ -182,7 +179,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
             .AddJsonOptions(options =>
             {
                 //时间格式化响应
-                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(configParam.DatetimeFormat));
+                options.JsonSerializerOptions.Converters.Add(new JsonOptionsDate(_configParam.DatetimeFormat));
                 // 使用PascalCase属性名,动态API才能拿到值。
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 //禁止字符串被转义成Unicode
@@ -193,9 +190,9 @@ namespace FaceMan.DynamicWebAPI.Extensions
             services.AddMvc(options => { })
                     .AddRazorPagesOptions((options) => { })
                     .AddRazorRuntimeCompilation()
-                    .AddDynamicWebApi(configParam);
+                    .AddDynamicWebApi(_configParam);
 
-            services.AddSwagger(configParam);
+            services.AddSwagger(_configParam);
         }
     }
 }
