@@ -133,7 +133,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
                     // 文档展开方式
                     options.DocExpansion(_configParam.DocExpansion);
                     // 开启登录页
-                    if (param.EnableLoginPage)
+                    if (_configParam.EnableLoginPage)
                     {
                         options.IndexStream = () =>
                         {
