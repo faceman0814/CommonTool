@@ -62,6 +62,11 @@ namespace FaceMan.DynamicWebAPI.Filters
         }
         private void ProcessResult(ActionExecutedContext context)
         {
+            if (context.Result is ViewResult)
+            {
+                //视图结果不做处理
+                return;
+            }
             if (context.Result is ObjectResult result)
             {
                 if (result.StatusCode < 200 || result.StatusCode >= 300)

@@ -405,3 +405,4 @@ var conifg = new SwaggerConfigParam()
     EnableSimpleToken=true
     EnableLoginPage=false
 };
+![image](https://github.com/faceman0814/picx-images-hosting/raw/master/20241125/image.esjn7me3s.webp)

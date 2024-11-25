@@ -32,7 +32,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
             EnableLoginPage = true,
             LoginPagePath = "pages/swagger.html",
             EnableApiResultFilter = true,
-            EnableSimpleToken = true
+            EnableSimpleToken = false
         };
         /// <summary>
         /// 配置Swagger
@@ -137,7 +137,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
                     // 文档展开方式
                     options.DocExpansion(param.DocExpansion);
                     // 开启登录页
-                    if (param.EnableLoginPage )
+                    if (param.EnableLoginPage)
                     {
                         options.IndexStream = () =>
                         {
