@@ -10,47 +10,43 @@ using Microsoft.Extensions.Configuration;
 
 namespace FaceMan.EntityFrameworkCore
 {
-    public class FaceManDbContextFactory : IDesignTimeDbContextFactory<FaceManDbContext>
+    public class FaceManDbContextFactory<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
-        public FaceManDbContext CreateDbContext(string[] args)
+        public virtual TContext CreateDbContext(string[] args)
         {
-            // 设定配置文件路径
+            var hostName = args[0];
             DirectoryInfo directoryInfo = new DirectoryInfo(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
-            var path = Path.Combine(directoryInfo.FullName, "FlyFramework.WebHost");
+            var path = Path.Combine(directoryInfo.FullName, hostName);
+
             Console.WriteLine("工作目录：{0}", path);
-            // 配置 builder 来读取 appsettings.json
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(path)
                 .AddJsonFile("appsettings.json")
                 .Build();
-            // 从配置中读取连接字符串
+
             var connectionString = configuration.GetConnectionString("Default");
             var databaseType = configuration.GetSection("ConnectionStrings:DatabaseType").Get<DatabaseType>();
             Console.WriteLine("迁移使用数据库连接字符串：{0}", connectionString);
             Console.WriteLine("迁移使用数据库类型：{0}", databaseType);
-            var option = new DbContextOptionsBuilder<FaceManDbContext>();
+
+
+            var optionsBuilder = new DbContextOptionsBuilder<TContext>();
             switch (databaseType)
             {
                 case DatabaseType.SqlServer:
-                    option.UseSqlServer(connectionString);
+                    optionsBuilder.UseSqlServer(connectionString);
                     break;
-                case DatabaseType.MySql:
-                    option.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 31)));
-                    break;
-
                 case DatabaseType.Sqlite:
-                    option.UseSqlite(connectionString);
+                    optionsBuilder.UseSqlite(connectionString);
                     break;
-
                 case DatabaseType.Postgre:
-                    option.UseNpgsql(connectionString);
+                    optionsBuilder.UseNpgsql(connectionString);
                     break;
-
                 default:
                     throw new Exception("不支持的数据库类型");
             }
-            //获取appsettings配置
-            return new FaceManDbContext(option.Options);
+
+            return (TContext)Activator.CreateInstance(typeof(TContext), optionsBuilder.Options);
         }
     }
 }
