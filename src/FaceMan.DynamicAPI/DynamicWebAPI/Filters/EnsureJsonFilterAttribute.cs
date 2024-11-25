@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaceMan.DynamicWebAPI.Attributes
+namespace FaceMan.DynamicWebAPI.Filters
 {
     public class EnsureJsonFilterAttribute : ActionFilterAttribute
     {
