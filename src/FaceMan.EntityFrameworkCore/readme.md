@@ -41,6 +41,13 @@ Scaffold-DbContext "Host=8.137.77.105;Port=5432;Database=Demo;Username=postgres;
         }
     }
 ```
+配置appsettings.json
+```Json
+ "ConnectionStrings": {
+    "DatabaseType": "Postgre",//详情请看DatabaseType
+    "Default": "Host=xxxxx;Port=5432;Database=Demo;Username=postgres;Password=bb123456"
+  },
+```
 EF所在项目执行迁移命令
 ```shell
 //生成迁移文件
