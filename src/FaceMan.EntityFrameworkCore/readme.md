@@ -15,15 +15,7 @@ Scaffold-DbContext "Host=8.137.77.105;Port=5432;Database=Demo;Username=postgres;
 ```
 
 ### 代码优先
-EF所在项目执行迁移命令
-```shell
-//生成迁移文件
-Add-Migration Init
-//执行到数据库
-Update-DataBase
-//撤回迁移文件-不需要不执行
-Remove-Migration
-```
+
 
 创建DemoDbContext
 ```csharp
@@ -48,6 +40,15 @@ Remove-Migration
             return base.CreateDbContext(args);
         }
     }
+```
+EF所在项目执行迁移命令
+```shell
+//生成迁移文件
+Add-Migration Init
+//执行到数据库
+Update-DataBase
+//撤回迁移文件-不需要不执行
+Remove-Migration
 ```
 
 ### 注册
