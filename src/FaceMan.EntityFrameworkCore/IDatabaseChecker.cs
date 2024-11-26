@@ -44,7 +44,6 @@ namespace FaceMan.EntityFrameworkCore
 
         public bool Exist(string connectionString)
         {
-            Console.WriteLine("数据库连接:");
             if (connectionString.IsNullOrEmpty())
             {
                 //单元测试下连接字符串为空

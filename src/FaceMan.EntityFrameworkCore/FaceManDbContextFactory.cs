@@ -12,10 +12,7 @@ namespace FaceMan.EntityFrameworkCore
 {
     public class FaceManDbContextFactory<TContext> : IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
-
-
-        public void ConfigureDatabase<T>(T options, DatabaseType databaseType, string connectionString)
-    where T : DbContextOptionsBuilder
+        public void ConfigureDatabase<T>(T options, DatabaseType databaseType, string connectionString) where T : DbContextOptionsBuilder
         {
             switch (databaseType)
             {
