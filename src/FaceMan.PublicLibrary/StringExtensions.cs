@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FaceMan.DynamicWebAPI.Extensions
+namespace FaceMan.PublicLibrary
 {
     public static class StringExtensions
     {
