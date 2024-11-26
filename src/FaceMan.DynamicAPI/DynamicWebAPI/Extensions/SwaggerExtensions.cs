@@ -189,6 +189,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
 
             services.AddMvc(options => { })
                     .AddRazorPagesOptions((options) => { })
+                    //用于添加 Razor 视图的运行时编译功能
                     .AddRazorRuntimeCompilation()
                     .AddDynamicWebApi(_configParam);
 
