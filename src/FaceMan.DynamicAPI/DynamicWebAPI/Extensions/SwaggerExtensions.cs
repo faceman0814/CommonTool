@@ -22,17 +22,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
         private static SwaggerConfigParam _configParam = new SwaggerConfigParam()
         {
             Title = "FaceMan API",
-            Version = "v1",
-            Description = "FaceMan API",
-            ContactName = "FaceMan",
-            ContactEmail = "face<EMAIL>",
-            ContactUrl = "https://www.face-man.com",
-            EnableXmlComments = true,
-            ApiDocsPath = "ApiDocs",
-            EnableLoginPage = false,
-            LoginPagePath = "pages/swagger.html",
-            EnableApiResultFilter = true,
-            EnableSimpleToken = true
+            Version = "v1"
         };
         /// <summary>
         /// 配置Swagger
@@ -65,14 +55,14 @@ namespace FaceMan.DynamicWebAPI.Extensions
                 //添加自定义文档信息
                 options.SwaggerDoc(param.Version, new OpenApiInfo
                 {
-                    Title = param.Title,
-                    Version = param.Version,
-                    Description = param.Description,
+                    Title = param?.Title,
+                    Version = param?.Version,
+                    Description = param?.Description,
                     Contact = new OpenApiContact()
                     {
-                        Name = param.ContactName,
-                        Email = param.ContactEmail,
-                        Url = new Uri(param.ContactUrl)
+                        Name = param?.ContactName,
+                        Email = param?.ContactEmail,
+                        Url = param.ContactUrl != null ? new Uri(param.ContactUrl) : null
                     }
                 });
 
@@ -148,17 +138,18 @@ namespace FaceMan.DynamicWebAPI.Extensions
 
         public static void AddDynamicApi(this IServiceCollection services, string webRootPath, SwaggerConfigParam configParam = null)
         {
-            var basePath = AppContext.BaseDirectory;
-            var configuration = new ConfigurationBuilder()
-                           .SetBasePath(basePath)
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                           .Build();
-            //获取wwwroot路径
+            //获取配置
             if (configParam != null)
             {
                 _configParam = configParam;
             }
-
+            //获取wwwroot路径
+            var basePath = AppContext.BaseDirectory;
+            var configuration = new ConfigurationBuilder()
+                           .SetBasePath(basePath)
+                           .AddJsonFile(_configParam.appsettings, optional: true, reloadOnChange: true)
+                           .Build();
+          
             _configParam.WebRootPath = webRootPath;
             _configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
             services.AddMvcCore(x =>

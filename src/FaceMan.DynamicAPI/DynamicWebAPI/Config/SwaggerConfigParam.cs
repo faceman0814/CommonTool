@@ -46,7 +46,7 @@ namespace FaceMan.DynamicWebAPI.Config
         /// <summary>
         /// 注释文档路径，生成注释文档时，将XML文件放在该路径下。
         /// </summary>
-        public string ApiDocsPath { get; set; }
+        public string ApiDocsPath { get; set; } = "ApiDocs";
         /// <summary>
         /// 是否开启API结果过滤器,默认开启
         /// </summary>
@@ -95,5 +95,9 @@ namespace FaceMan.DynamicWebAPI.Config
         /// 配置API路由前缀，ApiRoutePrefix是Swagger生成的API的根路径,默认值: api。
         /// </summary>
         public string ApiRoutePrefix { get; set; } = "api";
+        /// <summary>
+        /// 配置文件名称，默认值: appsettings.json
+        /// </summary>
+        public string appsettings { get; set; } = "appsettings.json";
     }
 }
