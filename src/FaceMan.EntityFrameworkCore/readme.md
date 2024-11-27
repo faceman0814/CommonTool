@@ -11,7 +11,7 @@ nuget引入包FaceMan.EntityFrameworkCore
 Scaffold-DbContext "你的连接字符串" 数据库包的名字 -OutputDir 输出的文件夹名称
 例如：
 ```shell
-Scaffold-DbContext "Host=8.137.77.105;Port=5432;Database=Demo;Username=postgres;Password=bb123456" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models
+Scaffold-DbContext "Host=xxxx;Port=5432;Database=Demo;Username=postgres;Password=bb123456" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models
 ```
 
 ### 代码优先

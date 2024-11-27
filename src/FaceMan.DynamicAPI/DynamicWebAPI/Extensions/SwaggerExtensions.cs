@@ -29,10 +29,10 @@ namespace FaceMan.DynamicWebAPI.Extensions
             ContactUrl = "https://www.face-man.com",
             EnableXmlComments = true,
             ApiDocsPath = "ApiDocs",
-            EnableLoginPage = true,
+            EnableLoginPage = false,
             LoginPagePath = "pages/swagger.html",
             EnableApiResultFilter = true,
-            EnableSimpleToken = false
+            EnableSimpleToken = true
         };
         /// <summary>
         /// 配置Swagger
