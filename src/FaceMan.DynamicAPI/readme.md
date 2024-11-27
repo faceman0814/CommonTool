@@ -36,15 +36,10 @@ var conifg = new SwaggerConfigParam()
 {
     Title = "FaceMan API",
     Version = "v1",
-    Description = "FaceMan API",
-    ContactName = "FaceMan",
-    ContactEmail = "face<EMAIL>",
-    ContactUrl = "https://www.face-man.com",
-    WebRootPath = builder.Environment.WebRootPath,
     HttpMethods = builder.Configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>()
 };
 
-builder.Services.AddDynamicApi(conifg);
+builder.Services.AddDynamicApi(builder.Environment.WebRootPath, conifg);
 //其他配置
 
 app.UseSwagger(conifg);
