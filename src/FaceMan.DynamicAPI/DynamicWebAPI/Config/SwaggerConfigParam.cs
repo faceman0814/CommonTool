@@ -68,9 +68,9 @@ namespace FaceMan.DynamicWebAPI.Config
         /// </summary>
         public DocExpansion DocExpansion { get; set; } = DocExpansion.None;
         /// <summary>
-        /// 配置路由前缀，RoutePrefix是Swagger UI的根路径,默认值: api。
+        /// 配置路由前缀，RoutePrefix是Swagger UI的根路径,默认值: swagger。
         /// </summary>
-        public string RoutePrefix { get; set; } = "api";
+        public string RoutePrefix { get; set; } = "swagger";
         /// <summary>
         /// 设置默认模型展开深度。默认值为3，可以设置成-1以完全展开所有模型。
         /// </summary>
