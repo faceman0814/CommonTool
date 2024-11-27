@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\..\version.props" />
 	<PropertyGroup>
-		<LangVersion>$(LangVersion)</LangVersion>
 		<TargetFramework>$(DotNetVersion)</TargetFramework>
 		<RootNamespace>FaceMan</RootNamespace>
 		<Title>动态API</Title>
