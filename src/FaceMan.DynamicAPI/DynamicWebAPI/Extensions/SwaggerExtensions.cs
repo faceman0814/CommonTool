@@ -149,7 +149,7 @@ namespace FaceMan.DynamicWebAPI.Extensions
                            .SetBasePath(basePath)
                            .AddJsonFile(_configParam.appsettings, optional: true, reloadOnChange: true)
                            .Build();
-          
+
             _configParam.WebRootPath = webRootPath;
             _configParam.HttpMethods = configuration.GetSection("HttpMethodInfo").Get<List<HttpMethodConfigure>>();
             services.AddMvcCore(x =>

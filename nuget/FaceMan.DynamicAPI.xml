@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FaceMan.DynamicAPI</name>
+    </assembly>
+    <members>
+        <member name="T:FaceMan.DynamicWebAPI.ApplicationServiceControllerFeatureProvider">
+            <summary>
+            自定义控制器特性提供程序，用于将实现了 IApplicationService 接口的类识别为控制器。
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceControllerFeatureProvider.PopulateFeature(System.Collections.Generic.IEnumerable{Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPart},Microsoft.AspNetCore.Mvc.Controllers.ControllerFeature)">
+            <inheritdoc />
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceControllerFeatureProvider.IsController(System.Reflection.TypeInfo)">
+            <summary>
+            判断给定的类型是否为控制器。
+            </summary>
+            <param name="typeInfo">要判断的类型信息。</param>
+            <returns>如果类型是控制器，则返回 true；否则返回 false。</returns>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.ApplicationServiceConvention">
+            <summary>
+            自定义应用程序模型约定，用于配置继承了 IApplicationService的接口或标记了 DynamicWebApiAttribute 特性接口的控制器。
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceConvention.Apply(Microsoft.AspNetCore.Mvc.ApplicationModels.ApplicationModel)">
+            <summary>
+            应用约定
+            </summary>
+            <param name="application"></param>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceConvention.ConfigureSelector(System.String,Microsoft.AspNetCore.Mvc.ApplicationModels.ActionModel)">
+            <summary>
+            配置选择器
+            </summary>
+            <param name="controllerName"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceConvention.CreateActionSelector(System.String,Microsoft.AspNetCore.Mvc.ApplicationModels.ActionModel)">
+            <summary>
+            创建Action选择器
+            </summary>
+            <param name="controllerName"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.ApplicationServiceConvention.ConfigureSelectorModel(Microsoft.AspNetCore.Mvc.ApplicationModels.SelectorModel,Microsoft.AspNetCore.Mvc.ApplicationModels.ActionModel,System.String,System.String)">
+            <summary>
+            配置选择器模型
+            </summary>
+            <param name="selectorModel"></param>
+            <param name="action"></param>
+            <param name="controllerName"></param>
+            <param name="httpMethod"></param>
+            <returns></returns>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.Version">
+            <summary>
+            版本
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.WebRootPath">
+            <summary>
+            应用静态文件路径，例如：wwwroot
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.ContactName">
+            <summary>
+            联系人姓名
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.ContactUrl">
+            <summary>
+            联系人URL 
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.ContactEmail">
+            <summary>
+            联系人邮箱
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.HttpMethods">
+            <summary>
+            API请求类型配置
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.EnableXmlComments">
+            <summary>
+            是否开启文档注释
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.ApiDocsPath">
+            <summary>
+            注释文档路径，生成注释文档时，将XML文件放在该路径下。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.EnableApiResultFilter">
+            <summary>
+            是否开启API结果过滤器,默认开启
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.EnableLoginPage">
+            <summary>
+            是否开启登录页
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.EnableDeepLinking">
+            <summary>
+            是否启用深链接，启用后，用户可以直接通过URL访问特定的API操作或模型，而不需要手动导航到相应的位置。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.LoginPagePath">
+            <summary>
+            登录页路径,默认值: /pages/swagger.html
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.DocExpansion">
+            <summary>
+            文档展开方式,none为折叠，list为列表，默认为折叠
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.RoutePrefix">
+            <summary>
+            配置路由前缀，RoutePrefix是Swagger UI的根路径,默认值: swagger。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.DefaultModelExpandDepth">
+            <summary>
+            设置默认模型展开深度。默认值为3，可以设置成-1以完全展开所有模型。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.SwaggerEndpoint">
+            <summary>
+            配置Endpoint路径
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.DatetimeFormat">
+            <summary>
+            时间格式化响应,默认值: yyyy-MM-dd HH:mm:ss
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.CommonPostfixes">
+            <summary>
+            公共后缀，用于生成API时会删除。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.EnableSimpleToken">
+            <summary>
+            开启后每个请求都需要携带Token认证，默认关闭
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.ApiRoutePrefix">
+            <summary>
+            配置API路由前缀，ApiRoutePrefix是Swagger生成的API的根路径,默认值: api。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam.appsettings">
+            <summary>
+            配置文件名称，默认值: appsettings.json
+            </summary>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.DynamicWebApiAttribute">
+            <summary>
+            动态WebAPI特性
+            </summary>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.DynamicWebApiExtensions">
+            <summary>
+            动态WebAPI扩展类，用于在ASP.NET Core应用程序中添加动态WebAPI功能。
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.DynamicWebApiExtensions.AddDynamicWebApi(Microsoft.Extensions.DependencyInjection.IMvcBuilder,FaceMan.DynamicWebAPI.Config.SwaggerConfigParam)">
+            <summary>
+            为IMvcBuilder添加动态WebAPI功能。
+            </summary>
+            <param name="builder"></param>
+            <param name="param" cref="T:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.DynamicWebApiExtensions.AddDynamicWebApi(Microsoft.Extensions.DependencyInjection.IMvcCoreBuilder,FaceMan.DynamicWebAPI.Config.SwaggerConfigParam)">
+            <summary>
+            为IMvcCoreBuilder添加动态WebAPI功能
+            </summary>
+            <param name="builder"></param>
+            <param name="param" cref="T:FaceMan.DynamicWebAPI.Config.SwaggerConfigParam"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.ErrorExceptions.ApiError">
+            <summary>
+            错误信息定义
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.ErrorExceptions.UserFriendlyException.Details">
+            <summary>
+            错误详情
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.ErrorExceptions.UserFriendlyException.Code">
+            <summary>
+            任意错误代码。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.ErrorExceptions.UserFriendlyException.Severity">
+            <summary>
+            例外的严重程度。默认值：警告。
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Extensions.ApiResponse.Code">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Extensions.ApiResponse.Success">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Extensions.ApiResponse.Message">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.Extensions.ApiResponse`1">
+            <summary>
+            响应数据结构体
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:FaceMan.DynamicWebAPI.Extensions.ApiResponse`1.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.Extensions.SwaggerExtensions.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,FaceMan.DynamicWebAPI.Config.SwaggerConfigParam)">
+            <summary>
+            配置Swagger
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.Extensions.SwaggerExtensions.CustomSchemaIdSelector(System.Type)">
+            <summary>
+             自定义SchemaId
+            </summary>
+            <param name="modelType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.Extensions.SwaggerExtensions.UseDynamicSwagger(Microsoft.AspNetCore.Builder.WebApplication)">
+            <summary>
+            启用Swagger
+            </summary>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.Filters.GlobalActionFilterAttribute">
+            <summary>
+            全局的action过滤器，主要用来验证数据类型
+            </summary>
+        </member>
+        <member name="M:FaceMan.DynamicWebAPI.Filters.GlobalActionFilterAttribute.#ctor(Microsoft.Extensions.Logging.ILogger{FaceMan.DynamicWebAPI.Filters.GlobalActionFilterAttribute})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="T:FaceMan.DynamicWebAPI.IApplicationService">
+            <summary>
+            动态WebAPI接口
+            </summary>
+        </member>
+        <member name="T:FaceMan.Example.ApiController">
+            <summary>
+            控制器生成的API接口，不影响原有功能
+            </summary>
+        </member>
+        <member name="T:FaceMan.Example.AttributeService">
+            <summary>
+            用DynamicWebApi特性实现的动态API服务
+            </summary>
+        </member>
+        <member name="T:FaceMan.Example.TestAppService">
+            <summary>
+            继承IApplicationService实现的动态API服务
+            </summary>
+        </member>
+        <member name="M:FaceMan.Example.TestAppService.GetData(FaceMan.Example.InputParam)">
+            <summary>
+            实现GetDataAPI接口
+            </summary>
+            <param name="inputParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FaceMan.Example.TestAppService.CreateData(FaceMan.Example.InputParam)">
+            <summary>
+            实现CreateDataAPI接口
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
